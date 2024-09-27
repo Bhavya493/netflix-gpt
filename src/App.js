@@ -1,11 +1,7 @@
-import "./App.css";
+import Body from "./components/Login/Body";
 
 function App() {
-  return (
-    <div className="font-bold text-center m-4 text-gray-700">
-      <h2>React</h2>
-    </div>
-  );
+  return <Body />;
 }
 
 export default App;
