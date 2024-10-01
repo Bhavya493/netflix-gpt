@@ -50,7 +50,7 @@ const Header = () => {
       });
   }, []);
   return (
-    <div className="flex justify-between bg-black bg-gradient-to-b from-black bg-opacity-80">
+    <div className="flex justify-between bg-black">
       <div className="bg-gradient-to-b from-black z-10">
         <img className="w-[110px] h-[50px]" src={netFlixImg} alt="logo" />
       </div>
