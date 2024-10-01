@@ -7,9 +7,9 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../store/userSlice";
+import { backgroundImg } from "../../utils/constant";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -19,7 +19,6 @@ const Login = () => {
     password: "",
   });
   const [validateMsg, setValidateMsg] = useState("");
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const toggleSignIn = useCallback(() => {
@@ -69,7 +68,6 @@ const Login = () => {
                   photoURL: photoURL,
                 })
               );
-              navigate("/browse");
             })
             .catch((error) => {
               // An error occurred
@@ -90,7 +88,6 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
           console.log("signed in user", user);
-          navigate("/browse");
           return user;
         })
         .catch((error) => {
@@ -99,14 +96,7 @@ const Login = () => {
           console.log("errorCode", errorCode + " " + errorMessage);
         });
     }
-  }, [
-    dispatch,
-    formData.email,
-    formData.password,
-    formData.username,
-    isSignInForm,
-    navigate,
-  ]);
+  }, [dispatch, formData.email, formData.password, formData.username, isSignInForm]);
 
   return (
     <div>
@@ -114,7 +104,7 @@ const Login = () => {
       <div className="absolute">
         <img
           className="w-full h-full"
-          src="https://gtwallpaper.org/sites/default/files/wallpaper/246844/netflix-background-246844-2224599-6408439.png"
+          src={backgroundImg}
           alt="bg-image"
         />
       </div>

@@ -81,3 +81,15 @@ configure tailwind
    redirect to browse page
 - Browse
    - Header
+
+# Redirection Issues
+1. When we are in login page and change the url to browse, we can easily navigate which should not happen
+
+2. Once we login and go to browse page, and navigate to login page, we should not be able to navigate as the user is already logged in 
+
+# Fixes 
+
+For this we should rely on onAuthStateChanged API, as it provides the updated user credentials
+Earlier onAuthStateChanged API was called in Body component and navigate was called in Login component
+To fix this issue, we should call navigate in onAuthStateChanged API, but it throws error because Body component is not inside Router component.
+So we will move onAuthStateChanged API to Header component as it is rendered on all the pages
