@@ -5,14 +5,16 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../../store/userSlice";
 import { netFlixImg } from "../../utils/constant";
+import { toggleGPTSearchView } from "../../store/gptSearchSlice";
+import { handleTranslation } from "../../store/languageSlice";
+import { lang } from "../../utils/languageConstants";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.user);
-  console.log("user", user);
-
+  const {user, language} = useSelector((state) => state);
+  
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -49,19 +51,39 @@ const Header = () => {
         // An error happened.
       });
   }, []);
+
+  const handleGPTSearchClick = useCallback(() => {
+    dispatch(toggleGPTSearchView());
+  }, [dispatch]);
+
+  const handleLanguage = useCallback((event) => {
+    dispatch(handleTranslation(event.target.value))
+  }, [dispatch])
+
   return (
     <div className="flex justify-between bg-black">
       <div className="bg-gradient-to-b from-black z-10">
         <img className="w-[110px] h-[50px]" src={netFlixImg} alt="logo" />
       </div>
       {user && (
-        <button
-          className="
+        <div className="flex">
+          <div className="p-2">
+            <select className="p-2 border border-gray-400" onChange={(e) => handleLanguage(e)}>
+              <option value="en">English</option>
+              <option value="kn">Kannada</option>
+            </select>
+          </div>
+          <button className="text-white p-4" onClick={handleGPTSearchClick}>
+            {lang[language.ln].gptSearch}
+          </button>
+          <button
+            className="
              text-white p-4 w-[110px] h-[50px] text-center"
-          onClick={handleSignOut}
-        >
-          Sign Out
-        </button>
+            onClick={handleSignOut}
+          >
+            Sign Out
+          </button>
+        </div>
       )}
     </div>
   );

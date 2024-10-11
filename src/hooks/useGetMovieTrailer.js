@@ -13,7 +13,6 @@ export const useGetMovieTrailer = (movieId) => {
         )
           .then((res) => res.json())
           .then((data) => {
-           console.log('data', data);
             setTrailerData(data)
           });
       }, [movieId]);
